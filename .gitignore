@@ -1,0 +1,72 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# NestJS
+dist/
+tmp/
+*.log*
+*.pid
+*.seed
+*.pid.lock
+
+# VSCode
+.vscode/
+
+# WebStorm
+.idea/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.pid.lock
+
+# Tests
+__tests__/
+coverage/
+
+# IDE
+*.iml
+*.ipr
+*.iws
+
+# Compiled binary addons (https://github.com/nodejs/node-gyp/issues/2416)
+build/
+
+# NestJS generated files
+*.js
+*.js.map
+*.tsbuildinfo
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Environment variables
+.env
+
+# NestJS cache
+.nest/
+
+# package-lock.json
+package-lock.json
+
+# yarn.lock
+yarn.lock
+
+# dotenv environment variables file
+.env
+
+# NestJS documentation
+docs/
