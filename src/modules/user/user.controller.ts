@@ -30,13 +30,13 @@ export class UserController {
     return this.userService.login(dto);
   }
 
-  @Get(':userId')
+  @Get('/:userId')
   @ApiResponse({ type: User })
   getUser(@Param('userId') userIdOrName: string) {
     return this.userService.getProfile(userIdOrName);
   }
 
-  @Get(':userId/guilds')
+  @Get('/:userId/guilds')
   @ApiParam({ name: 'userId', type: String, required: true })
   @ApiResponse({ status: HttpStatus.CREATED, type: String })
   getGuilds(@Param('userId') userId: string) {

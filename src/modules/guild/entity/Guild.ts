@@ -7,7 +7,7 @@ export type GuildDocument = Guild & Document;
 @SchemaDecorator({ timestamps: true, toJSON: { virtuals: true } })
 export class Guild {
   @ApiProperty({ type: String, required: true, uniqueItems: true })
-  @Prop({ type: Schema.Types.String, unique: true, required: true })
+  @Prop({ type: Schema.Types.String, required: true })
   name: string;
 
   @ApiProperty({ type: String, required: false, nullable: true })
