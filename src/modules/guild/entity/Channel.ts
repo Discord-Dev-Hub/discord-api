@@ -13,7 +13,7 @@ export class Channel {
   name: string;
 
   @ApiProperty({ type: String, required: true })
-  @Prop({ type: Schema.Types.ObjectId, required: true })
+  @Prop({ type: Schema.Types.ObjectId, required: true, index: true })
   guildId: Types.ObjectId;
 
   @ApiProperty({ enum: ChannelTypes })
@@ -26,3 +26,5 @@ export class Channel {
 }
 
 export const ChannelSchema = SchemaFactory.createForClass(Channel);
+
+ChannelSchema.index({ _id: -1, guildId: -1 }, { name: 'channel_id_index' });

@@ -23,7 +23,7 @@ export class GuildController {
     return this.guildService.createGuild(dto);
   }
 
-  @Post(':guildId/channels')
+  @Post('/:guildId/channels')
   @ApiConsumes('multipart/form-data')
   @ApiParam({ name: 'guildId', type: String, required: true })
   @ApiBody({ type: CreateChannelDto })
@@ -33,14 +33,22 @@ export class GuildController {
     return this.guildService.createChannel(guildId, dto);
   }
 
-  @Get(':guildId/channels')
+  @Get('/:guildId/channels')
   @ApiParam({ name: 'guildId', type: String, required: true })
-  @ApiResponse({ status: HttpStatus.CREATED, type: String })
+  @ApiResponse({ status: HttpStatus.CREATED, type: [Channel] })
   getGuildChannels(@Param('guildId') guildId: string) {
     return this.guildService.getGuildChannels(guildId);
   }
 
-  @Get(':guildId')
+  @Get('/:guildId/channels/:channelId')
+  @ApiParam({ name: 'guildId', type: String, required: true })
+  @ApiParam({ name: 'channelId', type: String, required: true })
+  @ApiResponse({ status: HttpStatus.CREATED, type: Channel })
+  getChannelById(@Param('guildId') guildId: string, @Param('channelId') channelId: string) {
+    return this.guildService.getChannelById(guildId, channelId);
+  }
+
+  @Get('/:guildId')
   @ApiParam({ name: 'guildId', type: String, required: true })
   @ApiResponse({ status: HttpStatus.CREATED, type: Guild })
   getGuildById(@Param('guildId') guildId: string) {

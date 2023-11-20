@@ -45,7 +45,22 @@ export class GuildService {
       throw new NotFoundException(`Guild ${guildId} not found`);
     }
 
-    return this.guildModel.findById(guildId).lean();
+    return guild;
+  }
+
+  async getChannelById(guildId: string, channelId: string) {
+    const channel = await this.channelModel
+      .findOne({
+        _id: new Types.ObjectId(channelId),
+        guildId: new Types.ObjectId(guildId),
+      })
+      .lean();
+
+    if (!channel) {
+      throw new NotFoundException(`channel ${channelId} not found`);
+    }
+
+    return channel;
   }
 
   async createChannel(guildId: string, dto: CreateChannelDto) {
