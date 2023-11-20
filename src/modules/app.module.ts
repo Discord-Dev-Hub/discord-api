@@ -34,4 +34,8 @@ export class AppModule {
   constructor(@InjectConnection() private readonly connection: Connection) {
     mongoose.connection.setClient(this.connection.getClient());
   }
+
+  async onApplicationBootstrap() {
+    await this.connection.syncIndexes({ background: true });
+  }
 }
