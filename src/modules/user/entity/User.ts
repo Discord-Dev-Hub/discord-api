@@ -1,6 +1,6 @@
 import { Prop, Schema as SchemaDecorator, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Document, Schema } from 'mongoose';
+import { Document, Schema, Types } from 'mongoose';
 
 export type UserDocument = User & Document;
 
@@ -13,6 +13,10 @@ export class User {
   @ApiProperty({ type: String, required: true, uniqueItems: true })
   @Prop({ type: Schema.Types.String, unique: true, required: true })
   username: string;
+
+  @ApiProperty({ type: String, required: false, default: null })
+  @Prop({ type: Schema.Types.ObjectId, ref: 'img', required: false, default: null })
+  avatarId: Types.ObjectId | null;
 
   @Prop({ type: Schema.Types.String, required: true, select: false })
   hash: string;

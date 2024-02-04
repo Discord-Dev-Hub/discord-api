@@ -5,12 +5,14 @@ import { ClsModule, ClsService, ClsStore } from 'nestjs-cls';
 export class DiscordContextService {
   constructor(private readonly clsService: ClsService) {}
 
-  set(key: keyof ClsStore, value: ClsStore['user']): void {
+  set<T extends keyof ClsStore>(key: T, value: ClsStore[T]): void {
     this.clsService.set(key, value);
   }
 
-  get() {
-    return this.clsService.get();
+  get<T extends keyof ClsStore | undefined = undefined>(
+    key?: T,
+  ): T extends undefined ? ClsStore : ClsStore[T] {
+    return this.clsService.get(key);
   }
 }
 

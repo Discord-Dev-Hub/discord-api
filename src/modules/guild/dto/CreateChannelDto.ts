@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
-
-import { ChannelTypes } from '../constants/ChannelTypes';
+import { GuildChannelTypes } from '../constants/GuildChannelTypes';
 
 export class CreateChannelDto {
   @ApiProperty()
@@ -11,9 +10,9 @@ export class CreateChannelDto {
   @MaxLength(32)
   name: string;
 
-  @ApiProperty({ enum: ChannelTypes, required: true })
-  @IsEnum(ChannelTypes)
-  type: ChannelTypes;
+  @ApiProperty({ enum: GuildChannelTypes, required: true })
+  @IsEnum(GuildChannelTypes)
+  type: GuildChannelTypes;
 
   constructor(data: Partial<CreateChannelDto>) {
     Object.assign(this, data);

@@ -13,16 +13,20 @@ import { DiscordContextModule } from './context.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthenticationGuard } from './auth/auth.guard';
 import { MediaModule } from './media/media.module';
+import { ChatModule } from './chat/chat.module';
+import { RedisModule } from './redis.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(config.MONGO_DB, { autoCreate: true, readPreference: 'nearest' }),
     NestjsFormDataModule.config({ isGlobal: true, storage: FileSystemStoredFile }),
     DiscordContextModule,
+    RedisModule,
     MediaModule,
     UserModule,
     GuildModule,
     AuthModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [

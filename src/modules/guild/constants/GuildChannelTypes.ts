@@ -1,4 +1,4 @@
-export enum ChannelTypes {
+export enum GuildChannelTypes {
   TEXT = 'TEXT',
   VOICE = 'VOICE',
 }

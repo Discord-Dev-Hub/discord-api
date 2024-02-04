@@ -22,6 +22,22 @@ export class UserService {
     return this.guildService.getGuilds(userId);
   }
 
+  async getUserFromToken(token: string) {
+    const verified = Jwt.verify(token);
+
+    if (!verified?._id) {
+      throw new HttpException('Unrecognized token', HttpStatus.NOT_FOUND);
+    }
+
+    const user = await this.userModel.findById(verified._id).select('_id').lean().exec();
+
+    if (!user) {
+      throw new NotFoundException(`User ${verified._id} not found`);
+    }
+
+    return user;
+  }
+
   async getProfile(userId: string) {
     const user = await this.userModel.findOne({ _id: new Types.ObjectId(userId) }).lean();
 

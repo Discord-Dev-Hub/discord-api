@@ -10,8 +10,11 @@ import { ErrorInterceptor } from './injectables/error.interceptor';
 import { config } from './injectables/config/config';
 import { ClsMiddleware } from 'nestjs-cls';
 
+import { NestExpressApplication } from '@nestjs/platform-express';
+
 import { rateLimitMiddleware } from './injectables/injectables/rate-imit.middleware';
 import { DiscordRequestContextMiddleware } from './injectables/injectables/discord-request-context.middleware';
+import { RedisIOAdapter } from './modules/chat/RedisIOAdapter';
 
 function setupSwagger(app: INestApplication) {
   const builder = new DocumentBuilder()
@@ -23,8 +26,14 @@ function setupSwagger(app: INestApplication) {
   });
 }
 
+async function setupWebsocket(app: NestExpressApplication) {
+  const redisIoAdapter = new RedisIOAdapter(app);
+  await redisIoAdapter.connectToRedis();
+  app.useWebSocketAdapter(redisIoAdapter);
+}
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.enableCors({ origin: '*' });
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
@@ -33,6 +42,7 @@ async function bootstrap() {
   app.use(new ClsMiddleware({ saveReq: true, saveRes: true }).use);
   app.use(new DiscordRequestContextMiddleware().use);
   app.use(rateLimitMiddleware);
+  await setupWebsocket(app);
 
   setupSwagger(app);
   await app.listen(config.PORT);
